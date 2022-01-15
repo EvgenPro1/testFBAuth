@@ -9,7 +9,7 @@ const AuthFb = () => {
         }
     }
 
-    return auth.authStatus ? <div> hello {auth.name}</div> :
+    return !auth.authStatus ? <div className='fbGreetings'> hello {auth.name}</div> :
         <FacebookLogin
         appId="1701100586887951"
         autoLoad={true}
