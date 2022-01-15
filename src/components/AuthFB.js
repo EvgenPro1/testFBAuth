@@ -1,18 +1,22 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import FacebookLogin from "react-facebook-login";
 
-const responseFacebook = response => {
-    console.log(response);
-}
-const componentClicked = (data) => {
-    console.warn(data)
-}
+const AuthFb = () => {
+    const [auth, setAuth] = useState(false)
+    const responseFacebook = response => response.name
 
-const AuthFb = () => <FacebookLogin
-            appId="1701100586887951"
-            autoLoad={true}
-            fields="name,email,picture"
-            onClick={componentClicked}
-            callback={responseFacebook} />
+    useEffect(()=>{
+        if (responseFacebook) {
+            setAuth(true)
+        } else  setAuth(false)
+    }, [])
+
+    return !auth ? <FacebookLogin
+        appId="1701100586887951"
+        autoLoad={true}
+        fields="name,email,picture"
+        onClick={componentClicked}
+        callback={responseFacebook}/> : <div> hello {responseFacebook}</div>
+}
 
 export default AuthFb;
