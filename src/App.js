@@ -1,34 +1,41 @@
-import './App.css';
 import {useEffect, useState} from "react";
-import {CharsList} from "./components/CharsList";
-import {getAllChars} from "./API/asyncActoins";
 import {BrowserRouter, Route, Routes, Link} from "react-router-dom";
-import {FavoritesChars} from "./components/FavoritesChars";
+
 import {AutoSearch} from "./components/AutoSerch";
 import {Profile} from "./components/Profile";
 import AuthFb from "./components/AuthFB";
+import {FavoritesChars} from "./components/FavoritesChars";
+import {getAllChars} from "./API/asyncActoins";
+import {CharsList} from "./components/CharsList";
+
+import './App.css';
 
 function App() {
-    const [state, setState] = useState([])
-    const setStateToLocalStorage = () => {
+    const [state, setState] = useState([]) //here we will keep our arr of characters
+
+    const setStateToLocalStorage = () => { // this function update localStorage
         localStorage.setItem('charList', JSON.stringify(state))
     }
     useEffect(async () => {
-        // localStorage.setItem('charList', JSON.stringify([...newHandleCount]))
+        //here we check is any thing (charList) in LS
         const oldState = localStorage.getItem('charList')
         if (oldState) {
+            //if we have charList we don't send any requests because we know that info on server won't updates
             setState(JSON.parse(oldState))
         } else {
+            //we send request at first visiting our page
             const newState = await getAllChars()
+            //we add some new fields for correct working
             setState(await newState.map(item => ({...item, like: false, dislike: false, photo: null})))
-
         }
     }, [])
 
-    useEffect(()=> {
+    //if users something change on page we update LS and save this changing
+    useEffect(() => {
         setStateToLocalStorage()
-    },[state])
+    }, [state])
 
+    //this function controls likes/dislikes and updates state
     const handleChange = (itemId, action, oppositeName) => {
         const indexId = state.findIndex(({id}) => id === itemId)
         const newItem = {...state[indexId]}
@@ -39,6 +46,7 @@ function App() {
         setState(() => newState)
     }
 
+    // this function adds links to photos for characters witch users choose
     const handleAddPhoto = (itemId, link) => {
         const indexId = state.findIndex(({id}) => id === itemId)
         const newItem = {...state[indexId]}
@@ -47,6 +55,7 @@ function App() {
         newState[indexId] = newItem
         setState(() => newState)
     }
+
     return (
         <BrowserRouter>
             <div className="app">
@@ -70,8 +79,5 @@ function App() {
         </BrowserRouter>
     );
 }
-
-
-
 
 export default App;

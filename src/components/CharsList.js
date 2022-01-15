@@ -2,18 +2,19 @@ import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 
 export const CharsList = ({state, handleChange, handleAddPhoto}) => {
-    const [modalId, setModalId] = useState(false)
-    const [link, setLink] = useState('')
+    const [modalId, setModalId] = useState(false) //keep id of char for adding photo
+    const [link, setLink] = useState('') //keep link of char for adding photo
 
     const handler = (id, e) => {
         e.preventDefault()
-        if (e.target.attributes.oppositename) {
+        if (e.target.attributes.oppositename) { //just protection from error
             const {name, oppositename} = e.target.attributes
-            handleChange(id, name.value, oppositename.value)
+            handleChange(id, name.value, oppositename.value)//connect pair of relate fields
         }
     }
+
     const handleOpenCloseModal = (id = false) => {
-        setModalId(typeof id === "number" ? id : false)
+        setModalId(typeof id === "number" ? id : false) //if user clicks anywhere but not input for links modal-window will close
         setLink('')
     }
     const handleSubmit = (e) => {
@@ -49,7 +50,7 @@ export const CharsList = ({state, handleChange, handleAddPhoto}) => {
             {modalId && <>
                 <div className='background-gray' onClick={handleOpenCloseModal}/>
                 <div className='modal'>
-                    <h3>Add photo (link)</h3>
+                    <h3>Add photo (link) to {state[modalId-1].name}</h3>
                     <form action="" onSubmit={handleSubmit}>
                         <input required={true} onChange={(e) => setLink(e.target.value)} value={link}/>
                         <button type='submit'>add photo</button>

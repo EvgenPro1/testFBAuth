@@ -1,7 +1,0 @@
-{
-  "projects": {
-    "default": "test-fbauth",
-    "hoisting": "mytest-fb-auth"
-  },
-  "targets": {}
-}

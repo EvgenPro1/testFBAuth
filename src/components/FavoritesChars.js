@@ -1,6 +1,7 @@
 import React from 'react';
 
 export const FavoritesChars = ({state}) => {
+    //just make filtered list from props
     const favCharList = state.filter(({like}) => like).map(({
                                                                 name,
                                                                 species,
@@ -8,7 +9,7 @@ export const FavoritesChars = ({state}) => {
                                                                 location,
                                                                 episode,
                                                                 status,
-                                                                created,id
+                                                                created, id
                                                             }) => {
             const episodeList = episode.map(item => <li key={item}>{item}</li>)
             return <li key={id}>
@@ -17,7 +18,7 @@ export const FavoritesChars = ({state}) => {
                 gender: <span className='bold'>{gender}</span>,
                 <a className='italic' href={location.url}> location: {location.name}</a>,
                 status: <span className='bold'>{status}</span>,
-                created: <span className='bold'>{created.slice(0,-5)}</span>,
+                created: <span className='bold'>{created.slice(0, -5)}</span>,
                 <div>episode(s): <ul>{episodeList}</ul></div>
             </li>
         }

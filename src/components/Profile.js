@@ -22,7 +22,7 @@ export const Profile = ({state}) => {
         );
     }
     catch {
-     navigate(`/`)
+     navigate(`/`)//if user trying get any character before he sow main list (with get request) he will be directed to main list
         return <div/>
     }
 
