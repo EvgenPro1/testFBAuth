@@ -15,7 +15,7 @@ const AuthFb = () => {
         appId="1701100586887951"
         autoLoad={true}
         fields="name,email,picture"
-        onClick={componentClicked}
+        // onClick={componentClicked}
         callback={responseFacebook}/> : <div> hello {responseFacebook}</div>
 }
 
